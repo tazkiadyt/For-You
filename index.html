@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>For You</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Edu+AU+VIC+WA+NT+Pre:wght@400..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background-color: #f7f7f7;
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        margin: 20px;
+        color: #333;
+        font-family: "Caveat", cursive;
+        font-optical-sizing: auto;
+      }
+      #lyrics-container {
+        width: 80%;
+        margin: 0 auto;
+        padding: 20px;
+        border: 2px solid #ccc;
+        background: #fff;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        min-height: 100px;
+      }
+      .lyric {
+        font-size: 30px;
+        color: #0e0e0e;
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+        font-family: "Caveat", cursive;
+        font-optical-sizing: auto;
+      }
+      button {
+        margin: 10px;
+        padding: 10px 20px;
+        font-size: 16px;
+        color: white;
+        background: #007bff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>I Make This For You 😊</h1>
+    <div id="lyrics-container">
+      <!-- Lirik akan muncul di sini -->
+    </div>
+
+    <!-- Audio element for playing the music -->
+    <audio id="audio-player" src="Asset/wwd (mp3cut.net).mp3"></audio>
+
+    <button onclick="startLyrics()">Mulai</button>
+    <button onclick="resetLyrics()">Reset</button>
+
+    <script>
+      // Daftar lirik lagu dengan jeda waktu (dalam milidetik)
+      const lyrics = [
+        { text: "Do you think I have forgotten?", delay: 6000 },
+        { text: "Do you think I have forgotten?", delay: 6000 },
+        { text: "Do you think I have forgotten?", delay: 5000 },
+        { text: "About you?", delay: 6000 },
+      ];
+
+      const lyricsContainer = document.getElementById("lyrics-container");
+      const audioPlayer = document.getElementById("audio-player");
+      let currentLine = 0;
+
+      // Fungsi untuk menampilkan lirik baris demi baris dengan jeda
+      function startLyrics() {
+        audioPlayer.play(); // Memutar musik saat mulai
+        displayNextLyric();
+      }
+
+      function displayNextLyric() {
+        if (currentLine < lyrics.length) {
+          // Buat elemen lirik baru
+          const line = document.createElement("div");
+          line.className = "lyric";
+          line.innerText = lyrics[currentLine].text;
+          lyricsContainer.appendChild(line);
+
+          // Tunggu sebentar, lalu tampilkan dengan animasi
+          setTimeout(() => {
+            line.style.opacity = 1;
+          }, 100);
+
+          // Ambil jeda dari baris saat ini
+          const delay = lyrics[currentLine].delay;
+
+          // Lanjut ke baris berikutnya setelah jeda
+          currentLine++;
+          setTimeout(displayNextLyric, delay);
+        } else {
+          audioPlayer.pause(); // Hentikan musik setelah lirik selesai
+        }
+      }
+
+      // Fungsi untuk mereset lirik
+      function resetLyrics() {
+        lyricsContainer.innerHTML = ""; // Hapus semua lirik
+        currentLine = 0; // Reset baris ke awal
+        audioPlayer.pause(); // Hentikan musik
+        audioPlayer.currentTime = 0; // Reset waktu musik ke awal
+      }
+    </script>
+  </body>
+</html>
